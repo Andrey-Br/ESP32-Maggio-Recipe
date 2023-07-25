@@ -1,6 +1,6 @@
 #ifndef _DYNAMIC_ARRAY_H_
 #define _DYNAMIC_ARRAY_H_
-
+// <kf
 template <class T>
 class Node
 {
