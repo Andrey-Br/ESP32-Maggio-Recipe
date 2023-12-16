@@ -34,7 +34,7 @@ void BaseCookingMode::tick(){};
 void BaseCookingMode::start(){};
 void BaseCookingMode::end(){};
 String BaseCookingMode::string() { return "[]"; };
-
+BaseCookingMode::~BaseCookingMode(){};
 #pragma endregion
 
 #pragma region ManualMode
@@ -243,11 +243,10 @@ bool CoolingSlowMode::isComplete() { return Temp::milk <= temp; };
 
 //  DelayMode
 #pragma region DelayMode
-
 DelayMode::DelayMode(String input)
 {
     DecodeActionBloc decode(input);
-    this->delayedStage = decode.actionBlock;
+    this->delayedStage = decode.getActionBlock();
 
     int8_t c = decode.param.indexOf(CHAR_NEXT_PARAM);
     if (c > 0)
@@ -297,6 +296,13 @@ String DelayMode::string()
 
     return result;
 };
+DelayMode::~DelayMode()
+{
+    if (delayedStage != nullptr)
+    {
+        delete delayedStage;
+    }
+}
 
 #pragma endregion
 
@@ -306,7 +312,7 @@ String DelayMode::string()
 InfinityMode::InfinityMode(String input)
 {
     DecodeActionBloc decode(input);
-    this->stage = decode.actionBlock;
+    this->stage = decode.getActionBlock();
 };
 bool InfinityMode::isComplete()
 {
@@ -329,8 +335,16 @@ String InfinityMode::string()
         result += stage->stringAll();
     return result;
 };
-void InfinityMode::end(){
-    if (stage != nullptr) stage->end();
+void InfinityMode::end()
+{
+    if (stage != nullptr)
+        stage->end();
 }
-
+InfinityMode::~InfinityMode()
+{
+    if (stage != nullptr)
+    {
+        delete stage;
+    }
+}
 #pragma endregion

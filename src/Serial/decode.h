@@ -25,13 +25,20 @@ private:
   //Генерирует и возвращает указатель на объект блока рецепта
   ActionBlock *generateActionBlock(String input);
 
+  //Сгенерированный ActionBlock
+  ActionBlock* _actionBlock = nullptr;
+  
+  // Забрали ли блок, если нет, то удалим его в деструкторе
+  bool _getActionBlock = false;
+
 public:
   DecodeActionBloc(String input);
+  ~DecodeActionBloc();
   
-
   // Параметр который 
   String param = "";
-  ActionBlock* actionBlock = nullptr;
+  
+  ActionBlock* getActionBlock();
 
 };
 

@@ -58,7 +58,7 @@ DecodeActionBloc::DecodeActionBloc(String input)
   else
   {
     param = input.substring(0, countInputChar);                             // input.substring(0, countInputChar - 1);
-    actionBlock = generateActionBlock(input.substring(countInputChar + 1)); // String s2 = input.substring(countInputChar + 1);
+    _actionBlock = generateActionBlock(input.substring(countInputChar + 1)); // String s2 = input.substring(countInputChar + 1);
   };
 };
 
@@ -89,6 +89,19 @@ ActionBlock *DecodeActionBloc::generateActionBlock(String input)
 
   actionCommandDecode(input);
   return new ActionBlock(_cookingMode, _mixerMode);
+};
+
+ActionBlock* DecodeActionBloc:: getActionBlock() {
+    _getActionBlock = true;
+    return _actionBlock;
+  }
+
+DecodeActionBloc::~DecodeActionBloc(){
+  if (!_getActionBlock) {
+    if (_actionBlock != nullptr) {
+      delete _actionBlock;
+    }
+  }
 };
 
 // ###################################################################################################
@@ -327,9 +340,9 @@ void oneCommandDecode(String input)
     {
       DecodeActionBloc decode(param);
       if (decode.param == "")
-        RecipeController.addLast(decode.actionBlock);
+        RecipeController.addLast(decode.getActionBlock());
       else
-        RecipeController.addIndex(decode.param.toInt(), decode.actionBlock);
+        RecipeController.addIndex(decode.param.toInt(), decode.getActionBlock());
     }
     break;
 
@@ -345,7 +358,7 @@ void oneCommandDecode(String input)
     case S(COMMAND_RECIPE_INDEX):
     {
       DecodeActionBloc decode(param);
-      RecipeController.changeIndex(decode.param.toInt(), decode.actionBlock);
+      RecipeController.changeIndex(decode.param.toInt(), decode.getActionBlock());
     }
     break;
 
@@ -402,7 +415,7 @@ void oneCommandDecode(String input)
     // Войти в ручной режим
     case S(COMMAND_RECIPE_MANUAL):{
       DecodeActionBloc decode(param);
-      RecipeController.manualStart(decode.actionBlock);
+      RecipeController.manualStart(decode.getActionBlock());
     };
       break;
 

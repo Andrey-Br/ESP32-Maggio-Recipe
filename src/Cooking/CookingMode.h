@@ -31,6 +31,7 @@ public:
   virtual void start();
   virtual String string();
   virtual void end();
+  virtual ~BaseCookingMode();
 };
 
 //  Пустой режим
@@ -179,6 +180,7 @@ public:
   void start() override;
   String string() override;
   void end () override;
+  ~DelayMode();
 };
 
 //  Бесконечный режим
@@ -193,7 +195,7 @@ public:
   void start() override;
   void end() override;
   String string() override;
-
+  ~InfinityMode();
 };
 
 #endif

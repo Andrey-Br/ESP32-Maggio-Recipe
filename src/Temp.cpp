@@ -15,13 +15,9 @@ float map_f(float x, float in_min, float in_max, float out_min, float out_max)
   return (delta * rise) / run + out_min;
 }
 
-OneWire ds_milk(Temp::milk);
-OneWire ds_water(Temp::water);
 
-// CTemp Temp;
-
-OneWire Temp::ds_milk = OneWire(Temp::milk);
-OneWire Temp::ds_water = OneWire(Temp::water);
+OneWire Temp::ds_milk = OneWire(PIN_TEMP_MILK);
+OneWire Temp::ds_water = OneWire(PIN_TEMP_WATER);
 
 float Temp::milk = 0;
 float Temp::water = 0;

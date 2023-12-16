@@ -1,6 +1,6 @@
 #ifndef _DYNAMIC_ARRAY_H_
 #define _DYNAMIC_ARRAY_H_
-// <kf
+
 template <class T>
 class Node
 {
@@ -150,9 +150,20 @@ public:
   // Сменить значение в элементе с индексом...
   void change(unsigned char index, T *value)
   {
+    if (index > _size) throw "Incorrect Index";
+    
     Node<T> *currentNode = _nodeFromIndex(index);
+    
+    //Если нужного узла нет, записываем в конец
+    if (currentNode == nullptr){
+      addLast(value);
+    } 
+
+    // Если есть меняем его значение
+    else {
     delete currentNode->value;
     currentNode->value = value;
+    }
   }
 
   // Очистить весь массив
